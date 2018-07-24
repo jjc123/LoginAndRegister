@@ -1,17 +1,24 @@
 package servlet;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
+
 import entity.Teacher;
 import exception.TeacherException;
 import service.TeacherService;
 import service.impl.TeacherServiceImpl;
+import utils.WebUtils;
 import utils.jdbcUtil;
 
 @WebServlet("/TeacherServlet")
@@ -22,10 +29,7 @@ public class TeacherServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String method = request.getParameter("method");
-		if("register".equals(method)) {
 			register(request,response);
-		}
 	} ;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -37,9 +41,14 @@ public class TeacherServlet extends HttpServlet {
 		Connection connection = jdbcUtil.getConnection();
 		System.out.println(connection);
 		System.out.println(request.getContextPath());
-		Teacher teacher = new Teacher();
-		teacher.setName(request.getParameter("teacherName"));
-		teacher.setPassword(request.getParameter("password"));
+		Teacher teacher = null;
+		try {
+			teacher = WebUtils.copyToBean(request, Teacher.class);
+			System.out.println(teacher);
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		//teacher = WebUtils.copyToBean(request, Teacher.class);
 		try {
 			teacherService.register(teacher);
 			request.setAttribute("name", teacher.getName());

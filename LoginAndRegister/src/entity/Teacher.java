@@ -23,4 +23,9 @@ public class Teacher {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Teacher["+id+","+name+","+password+"]";
+	}
 }
