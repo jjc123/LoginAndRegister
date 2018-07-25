@@ -10,14 +10,12 @@
 
 	<%-- ${pageContext.request.contextPath}  
 <%=request.getContextPath()%>用于解决使用相对路径时出现的问题，它的作用是取出所部署项目的名字。 --%>
-	<form
-		action="${pageContext.request.contextPath}/TeacherServlet"
+	<form action="${pageContext.request.contextPath}/TeacherServlet"
 		method="POST">
 		<table>
 			<tr>
 				<td>用户名：</td>
-				<td><input type="text" name="name" /></td>
-				${context }
+				<td><input type="text" name="name" /></td> ${context }
 			</tr>
 			<tr>
 				<td>密码：</td>

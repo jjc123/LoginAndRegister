@@ -58,7 +58,8 @@ public class TeacherDaoDbutilsImpl implements Teacherdao {
 		QueryRunner queryRunner = new QueryRunner();
 		connection = jdbcUtil.getConnection();
 		try {
-			Teacher newteacher = queryRunner.query(connection, sql, new BeanHandler<Teacher>(Teacher.class), teacher.getName(),teacher.getPassword());
+			Teacher newteacher = queryRunner.query(connection, sql, new BeanHandler<Teacher>(Teacher.class),
+					teacher.getName(), teacher.getPassword());
 			if (newteacher != null) {
 				return newteacher;
 			}

@@ -59,7 +59,7 @@ public class TeacherDaoImpl implements Teacherdao {
 
 	@Override
 	public Teacher findByNameandPassword(Teacher teacher) {
-		
+
 		String sql = "SELECT *FROM teacher where name=? AND password=?";
 		try {
 			connection = jdbcUtil.getConnection();
@@ -67,7 +67,7 @@ public class TeacherDaoImpl implements Teacherdao {
 			prepareStatement.setString(1, teacher.getName());
 			prepareStatement.setString(2, teacher.getPassword());
 			result = prepareStatement.executeQuery();
-			if(result.next()) {
+			if (result.next()) {
 				Teacher newTeacher = new Teacher();
 				newTeacher.setId(result.getInt("id"));
 				newTeacher.setName(result.getString("name"));
