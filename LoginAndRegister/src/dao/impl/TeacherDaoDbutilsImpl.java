@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import dao.Teacherdao;
 import entity.Teacher;
+import utils.JdbcUtilsC3p0;
 import utils.jdbcUtil;
 
 public class TeacherDaoDbutilsImpl implements Teacherdao {
@@ -23,7 +24,7 @@ public class TeacherDaoDbutilsImpl implements Teacherdao {
 	public void save(Teacher teacher) {
 		String sql = "INSERT INTO teacher(name,password) values(?,?)";
 		QueryRunner queryRunner = new QueryRunner();
-		connection = jdbcUtil.getConnection();
+		connection = JdbcUtilsC3p0.getConnection();
 		try {
 			queryRunner.update(connection, sql, teacher.getName(), teacher.getPassword());
 		} catch (SQLException e) {
@@ -38,7 +39,7 @@ public class TeacherDaoDbutilsImpl implements Teacherdao {
 		String sql = "SELECT id FROM teacher WHERE name=?";
 		try {
 			QueryRunner queryRunner = new QueryRunner();
-			connection = jdbcUtil.getConnection();
+			connection = JdbcUtilsC3p0.getConnection();
 			Integer integer = queryRunner.query(connection, sql, new ScalarHandler<Integer>(), name);
 			if (integer != null) {
 				return true;
@@ -56,7 +57,7 @@ public class TeacherDaoDbutilsImpl implements Teacherdao {
 	public Teacher findByNameandPassword(Teacher teacher) {
 		String sql = "SELECT *FROM teacher WHERE name=? ADN password=?";
 		QueryRunner queryRunner = new QueryRunner();
-		connection = jdbcUtil.getConnection();
+		connection = JdbcUtilsC3p0.getConnection();
 		try {
 			Teacher newteacher = queryRunner.query(connection, sql, new BeanHandler<Teacher>(Teacher.class),
 					teacher.getName(), teacher.getPassword());

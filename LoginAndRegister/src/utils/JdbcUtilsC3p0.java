@@ -1,41 +1,18 @@
 package utils;
 
-import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-public class jdbcUtil {
-	private static String url = null;
-	private static String user = null;
-	private static String password = null;
-	private static String driverClass = null;
-	static {
-		try {
-			Properties properties = new Properties();
-			// 得到配置文件的流通道
-			InputStream in = jdbcUtil.class.getResourceAsStream("/db.properties");
-			properties.load(in);
-			url = properties.getProperty("url");
-			user = properties.getProperty("user");
-			password = properties.getProperty("password");
-			driverClass = properties.getProperty("driverClass");
-			// 注册Driver
-			Class.forName(driverClass);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("驱程程序注册出错");
-		}
-	}
-
+public class JdbcUtilsC3p0 {
 	// 得到连接
 	public static Connection getConnection() {
+		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		try {
-			Connection cnn = DriverManager.getConnection(url, user, password);
-			return cnn;
+			Connection connection = comboPooledDataSource.getConnection();
+			return connection;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
