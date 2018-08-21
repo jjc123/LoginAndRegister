@@ -9,3 +9,4 @@
 		<property name="maxIdleTime">1000</property>
 	</default-config>
 </c3p0-config>
+  
